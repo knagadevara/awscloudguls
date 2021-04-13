@@ -15,8 +15,10 @@ zab_trap_port="10051"
 zabbix_sender='/usr/bin/zabbix_sender'
 zab_psudo_host='SSL_TESTING_PSUDO_HOST'
 aws='/usr/local/bin/aws'
+aws_profile='admin'
+aws_region='us-east-1'
 CurrentDate=$(date +%Y%m%d)
-OutputFormat='--output json'
+OutputFormat="--profile ${aws_profile} --region ${aws_region} --output json"
 TempLoc='/tmp/TempCertDoc.json'
 
 AllCertList=$($aws acm list-certificates $OutputFormat)
@@ -26,14 +28,15 @@ for crt_arn in ${CertARN}
  do
 	$aws acm describe-certificate --certificate-arn ${crt_arn} $OutputFormat > $TempLoc.$CurrentDate
 	DomainName=$(cat $TempLoc | jq .Certificate.DomainName | tr -d \" )
-	CertExpiry=$(cat $TempLoc | jq .Certificate.NotAfter | tr -d \" | cut -d'T' -f1 | tr -d '-')
+	CertExpiry=$(cat $TempLoc | jq .Certificate.NotAfter | tr -d \"- | cut -d'T' -f1)
 	CertValidityNum=$(($CertExpiry - $CurrentDate))
 
 	if [[ $CertValidityNum -lt 30 ]]
 	then
+		echo "exp"
 		$zabbix_sender -z $zab_trap_host -p $zab_trap_port -s $zab_psudo_host -k $zab_trap_key -o "DomainName:$DomainName - Validity:$CertExpiry - State: EXP"
-
 	else
+		echo "alv"
 		$zabbix_sender -z $zab_trap_host -p $zab_trap_port -s $zab_psudo_host -k $zab_trap_key -o "DomainName:$DomainName - Validity:$CertExpiry - State: ALV"
 	fi
 

@@ -56,3 +56,71 @@ It is a good Practice to save the details of user profile to a variable.
 - Creating a Key Pair for ssh
 
 		aws ec2 create-key-pair --key-name KarthikAdmin $profile_region --query KeyMaterial | tr -d \"' > KarthikAdmin.pem
+
+
+### Process to delete the VPC.
+
+#### Step 1: Disassociate all the route tables with Subnets using association ID
+
+		Note: One cannot diassociate the default route-associations
+
+- To get the associations of route table
+
+		$aws ec2 describe-route-tables $OutputFormat --query "RouteTables"[]."Associations"[]."RouteTableAssociationId"
+
+- To disassociate
+
+		$aws ec2 disassociate-route-table --association-id "<route-acn-id>" $OutputFormat
+
+- To delete the route table
+
+		$aws ec2 delete-route-table --route-table-id rtb-0cfd8e87a069d97f8 $OutputFormat
+
+- To get the route table ID's
+
+		$aws ec2 describe-route-tables $OutputFormat --query "RouteTables"[]."Associations"[]."RouteTableId"
+
+
+#### Step 2: Get the associated subnets
+
+- Get the subnets
+
+		$aws ec2 describe-subnets $OutputFormat --query "Subnets"[]."SubnetId"
+
+- Delete the subnet
+
+		$aws ec2 delete-subnet --subnet-id "subnet-0cea43cee9a98b7b8" $OutputFormat
+
+#### Step 3: Get the VPC - Internet - Gateway association
+
+- Get the details of VPC
+
+		aws ec2 describe-vpcs $OutputFormat 
+
+- Get the details of the CIDR block
+
+		$aws ec2 describe-vpcs $OutputFormat --query "Vpcs"[]."CidrBlockAssociationSet"[]."AssociationId" | tr -d [:space:][]{}
+
+- Get the details of the Internet Gate way
+
+		$aws ec2 describe-internet-gateways $OutputFormat
+
+- Detach the IGW with VPC.
+
+		$aws ec2 detach-internet-gateway --internet-gateway-id igw-0b2d7d7013b4531c6  --vpc-id vpc-0f6ff424900f5e944 $OutputFormat
+
+#### Step 4: Remove the security groups.
+
+- Remove the security groups
+
+		$aws ec2 delete-security-group --group-id "sg-01afc41cb5247123c" $OutputFormat
+
+#### Step 5: Delete IGW and VPC
+
+- Delete IGW
+
+		$aws ec2 delete-internet-gateway --internet-gateway-id igw-0b2d7d7013b4531c6 $OutputFormat
+
+- Delete VPC
+		
+		$aws ec2 delete-vpc --vpc-id vpc-0f6ff424900f5e944 $OutputForma

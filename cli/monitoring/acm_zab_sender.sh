@@ -15,4 +15,5 @@ zabbix_sender='/usr/bin/zabbix_sender'
 zab_psudo_host='SSL_TESTING_PSUDO_HOST'
 zab_out="${1}"
 
-$zabbix_sender -z "${zab_trap_host}" -s "${zab_psudo_host}" -k "${zab_trap_key}" -o "${zab_out}"
+#$zabbix_sender -z "${zab_trap_host}" -s "${zab_psudo_host}" -k "${zab_trap_key}" -o "${zab_out}"
+echo $zab_out

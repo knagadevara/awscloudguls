@@ -20,8 +20,14 @@ for region in regionNames:
         print("\tInstanceId: {0}".format(instance.id))
         print("\t\tInstanceType: {0}".format(instance.instance_type))
         print("\t\tPlacement: {0}".format(instance.placement))
-        print("\t\tPresentState: {0}".format(instance.state))
+        PresentState=instance.state
+        print("\t\tPlacement: {0}".format(PresentState))
         print("\t\tBlockDevices: {0} , VolumeID: {1}".format(instance.block_device_mappings[0]['DeviceName'] , instance.block_device_mappings[0]['Ebs']['VolumeId']))
         print("\t\tCPU: {0}".format(instance.cpu_options))
-        print("\t\t STOPPING INSTANCE" , instance.stop())
+        if PresentState['Code'] == 80:
+            instance.start()
+            print("\t\tSTARTING")
+        else:
+            instance.stop()
+            print("\t\tSTOPPING")
         print("\n\n")

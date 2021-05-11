@@ -3,7 +3,7 @@
 
 import argparse
 import boto3
-import json
+import sys
 
 
 #### Helpful Content to display
@@ -28,9 +28,9 @@ def getSTATUS(instance):
         return instance.stop
     elif arguments.InstanceAction == "terminate":
         stateCODE = 48
-        exit
+        return instance.terminate
     else:
-        print(gen1)
+        sys.exit(gen1)
 
 
 ## Making a client
@@ -53,8 +53,6 @@ for region in regionNames:
         print("\t\tPlacement: {0}".format(instance.placement))
         PresentState=instance.state
         print("\t\tPresentState: {0}".format(PresentState))
-        print("\t\tBlockDevices: {0} , VolumeID: {1}".format(instance.block_device_mappings[0]['DeviceName'] , instance.block_device_mappings[0]['Ebs']['VolumeId']))
-        print("\t\tCPU: {0}".format(instance.cpu_options))
         runME = getSTATUS(instance)
         if PresentState['Code'] != stateCODE:
             runME()

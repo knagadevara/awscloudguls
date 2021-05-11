@@ -17,7 +17,8 @@ parseme = argparse.ArgumentParser(prog='StartStopInstances' ,  description=argDe
 parseme.add_argument('--InstanceAction', '-a', type=str, help='Takes only stop/start', required=True)
 arguments =  parseme.parse_args()
 
-
+## if the termination is erroring out, use the below command in aws-cli
+## aws ec2 modify-instance-attribute --instance-id  <instance_id>  --no-disable-api-termination
 def getSTATUS(instance):
     global stateCODE
     if arguments.InstanceAction == "start":

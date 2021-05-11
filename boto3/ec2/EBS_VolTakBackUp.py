@@ -2,8 +2,7 @@
 
 
 import argparse
-import boto3
-import json
+import boto3 , botostubs
 import time
 
 
@@ -61,8 +60,9 @@ ec2client = boto3.client('ec2')
 ## Getting regions
 response = ec2client.describe_regions()
 regionNames = [region['RegionName'] for region in response['Regions']]
+
 for region in regionNames:
-    ec2_resource = boto3.resource('ec2' , region_name=region)
+    ec2_resource: botostubs.EC2 = boto3.resource('ec2' , region_name=region)
     instances = ec2_resource.instances.filter(Filters=[{ 'Name' : "tag:{0}".format(arguments.tag_key) , 'Values': [ arguments.tag_value ]  }])
     print(region)
     print("--- --- " * 6)

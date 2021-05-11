@@ -17,11 +17,6 @@ parseme.add_argument('--tag-key', '-k', type=str, help='Takes the Tag:(Key)', re
 parseme.add_argument('--tag-value', '-v', type=str, help='Takes the Tag:(Value)', required=True)
 arguments =  parseme.parse_args()
 
-#### Creating a Session [ really to get the details of the present user details and accountID]
-# MySession = boto3.session.Session(profile_name='admin')
-# ec2regionNames = MySession.get_available_regions('ec2')
-# print(type(ec2regionNames))
-# print(ec2regionNames)
 #### Get account id
 aws_sts : botostubs.STS = boto3.client('sts')# type: botostubs to get the deature of autocomplete
 account_id = aws_sts.get_caller_identity().get('Account')

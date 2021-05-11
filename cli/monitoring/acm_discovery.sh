@@ -33,7 +33,7 @@ for crt_arn in ${CertARN}
         CertExpiry=$(cat $TempLoc.$CurrentDate | jq .Certificate.NotAfter | tr -d \"- | cut -d'T' -f1)
         ExpiredDate=$(date --date @${CertExpiry} +%Y%m%d)
         CertValidityNum=$(( ($(date --date="$ExpiredDate" +%s) - $(date --date="$CurrentDate" +%s) )/(60*60*24) ))
-	
+	echo $CertValidityNum
         if [[ $CertValidityNum -lt 0 ]]
         then
                 HostArrays+=$(  echo -en "{ \"{#DOMAINNAME}\" : \"DomainName_$DomainName\" }  , ")
@@ -83,3 +83,5 @@ function cleanup_files() {
         rm -rf /tmp/PRS_data.$CurrentDate
         rm -rf /tmp/ALV_data.$CurrentDate
 }
+
+call_sender

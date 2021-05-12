@@ -2,7 +2,7 @@
 
 
 import argparse
-import botostubs, boto3 , botocore
+import botostubs, boto3
 # import json
 # import time
 

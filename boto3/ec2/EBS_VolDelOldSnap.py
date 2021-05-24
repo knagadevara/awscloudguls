@@ -3,8 +3,6 @@
 
 import argparse
 import botostubs, boto3
-# import json
-# import time
 
 #### Helpful Content to display
 argDescription="Takes the Tag:(Key,Value) and stores the snapshot of the instance. Please be noted that the instance will be shut down in this process."

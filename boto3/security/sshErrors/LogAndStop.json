@@ -1,0 +1,26 @@
+{
+  "Version" : "2012-10-17",
+  "Statement" :
+          [
+            {
+              "Resource": "arn:aws:logs:*:*:*",
+              "Effect": "Allow",
+              "Action" :
+                      [
+                        "logs:CreateLogGroup" ,
+                        "logs:CreateLogStream" ,
+                        "logs:PutLogEvents"
+                      ]
+            },
+
+            {
+              "Resource": "*",
+              "Effect": "Allow",
+              "Action" :
+                      [
+                        "ec2:StopInstances"
+                      ]
+            }
+
+          ]
+}

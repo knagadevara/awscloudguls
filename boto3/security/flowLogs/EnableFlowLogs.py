@@ -36,6 +36,8 @@ def lambda_handler(event, context):
             print('VPC Flow logs are ENABLED')
         else:
             print('VPC Flow logs are DISABLED, CREATING!')
+            """Now the role which has been created earlier will be passed on to the new flow log group, which after 
+            assuming it can create logs in CloudWatchLogs. """
             create_flow_logs_response = ec2Client.create_flow_logs(
                 ResourceIds=[vpc_id],
                 ResourceType='VPC', # Can also be a network interface

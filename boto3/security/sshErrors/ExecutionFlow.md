@@ -3,6 +3,8 @@
         
             CloudWatchAgentAdminPolicy
             AmazonSSMManagedInstanceCore
+            AmazonInspectorFullAccess
+            
 2. Add the above created role to all the EC2 instances where SSH is open. Ensure that SSM-agent is UP and running else install it.
 3. Create an SNS Topic to alarm/notify the subscribers. 
 4. Go to AWS 'Systems Manager' console 

@@ -1,0 +1,16 @@
+[
+  {
+    "IncludeManagementEvents" : false,
+    "DataResources" :
+    [
+      {
+        "Values" :
+        [
+          "arn:aws:s3:::<account_number>-private-bucket"
+        ],
+        "Type" : "AWS::S3::Object"
+      }
+    ],
+    "ReadWriteType" : "All"
+  }
+]

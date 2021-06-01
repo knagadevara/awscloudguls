@@ -1,0 +1,32 @@
+{
+  "Version": "2012-10-17",
+  "Statement":
+  [
+    {
+      "Resource": "arn:aws:s3::<account-number>-object-scan-log-trail",
+      "Principal":
+      {
+        "Service" : "cloudtrail.amazonaws.com"
+      },
+      "Effect" : "Allow",
+      "Action" : "s3:GetBucketAcl"
+    },
+
+    {
+      "Resource": "arn:aws:s3::<account-number>-object-scan-log-trail/*",
+      "Principal":
+      {
+        "Service" : "cloudtrail.amazonaws.com"
+      },
+      "Effect" : "Allow",
+      "Action" : "s3:PutObject",
+      "Condition" :
+      {
+        "StringEquals" :
+        {
+          "s3:x-amz-acl" : "bucket-owner-full-control"
+        }
+      }
+    }
+  ]
+}

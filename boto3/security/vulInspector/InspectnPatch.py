@@ -85,6 +85,10 @@ def lambda_handler(event, context):
                               'ec2_instance_id: {0} based on CVE_ID:{1}'.format(ec2_instance_id , report_cve_id)
                 )
                 print("SSM send_command response:\n\t{0}".format(send_command_response))
+            else:
+                print("SSM Agent is not reachable, please check if the instance is UP and running "
+                      "Also, check if the SSM agent service is Active and Enabled."
+                      "Or this could also be a case where the Operating System is not LINUX")
     else:
         print('Skipping notification that is not Inspector:FindingReported')
         return 1

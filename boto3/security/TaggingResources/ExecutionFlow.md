@@ -7,7 +7,7 @@ AIM: Automating Tagging and lock the permissions of the resources which are crea
             CreateImage
             CreateSnapshot
 
--   These API-Call events can be captured  by configuring rules in EventBridge/CloudWatchEvents.
+-  These API-Call events can be captured  by configuring rules in EventBridge/CloudWatchEvents.
 -  The applied rules can recognize patterns and act as a trigger to kickoff Lambda-Function.
 -  The Lambda-Function will tag the instances with user/owner-id details, 
     which later can be used to restrict other users from conducting any operations on it.
@@ -36,9 +36,9 @@ AIM: Automating Tagging and lock the permissions of the resources which are crea
             --policy-document file://CreateTags.json  \
             --description "Lambda-Function Creates Tags on EC2 instances"
 
-2. Zip lamgda with other related packages.
+2. Zip the lambda function [EC2OwnerTag.py] with other related packages.
    
-        zip -r9 EC2OwnerTag.zip lambda_function.py
+        mv EC2OwnerTag.py lambda_function.py && zip -r9 EC2OwnerTag.zip lambda_function.py
     
 3. Create the Lambda function.
    
@@ -58,12 +58,12 @@ AIM: Automating Tagging and lock the permissions of the resources which are crea
 5. Point the Lambda function as a target to the PatternRule
     
             aws events put-targets \
-            --rule eventPatternRule \
+            --rule TriggerLambdaOnEC2Event \
             --targets Id=1,Arn=$lambdaArn
     
 6. Add permissions to CloudwatchEvents to invoke the lambda_function when a pattern is matched
             
-            aws lambda add-permission --function-name s3Public2Private \
+            aws lambda add-permission --function-name EC2OwnerTag \
             --statement-id AllowCloudwatchEventsToInvoke \
             --action 'lambda:InvokeFunction' \
             --principal events.amazonaws.com \

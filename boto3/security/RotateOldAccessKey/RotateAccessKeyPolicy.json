@@ -1,0 +1,38 @@
+{
+  "Version" : "2012-10-17",
+  "Statement" :
+          [
+            { "Sid": "LambdaLogging",
+              "Resource": "arn:aws:logs:*:*:*",
+              "Effect": "Allow",
+              "Action" :
+                      [
+                        "logs:CreateLogGroup" ,
+                        "logs:CreateLogStream" ,
+                        "logs:PutLogEvents"
+                      ]
+            },
+
+            {
+              "Sid": "IAMListAndUpdate",
+              "Resource": "arn:aws:iam:*:*:*",
+              "Effect": "Allow",
+              "Action" :
+                      [
+                        "iam:ListAccessKeys",
+                        "iam:ListUsers",
+                        "iam:UpdateAccessKey"
+                      ]
+            },
+
+            {
+              "Sid": "SendNotification",
+              "Resource": "arn:aws:ses:*:*:*",
+              "Effect": "Allow",
+              "Action" :
+                      [
+                        "ses:SendEmail"
+                      ]
+            }
+          ]
+}

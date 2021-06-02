@@ -53,7 +53,7 @@
             --runtime python3.7 \
             --environment Variables={BUCKET_NAME=s3://<account_number>-private-bucket} \
             --query "FunctionArn" | tr -d \\"[:space:][])
-9.  Add permissions to CloudwatchEvents to invoke lambda_function when a pattern is matched
+9.  Add permissions to CloudwatchEvents to invoke the lambda_function when a pattern is matched
             
             aws lambda add-permission --function-name s3Public2Private \
             --statement-id AllowCloudwatchEventsToInvoke \

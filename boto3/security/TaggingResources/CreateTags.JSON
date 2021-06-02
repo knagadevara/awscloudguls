@@ -1,0 +1,29 @@
+{
+  "Version" : "2012-10-17",
+  "Statement" :
+          [
+            {
+              "Sid" : "LambdaCloudWatchLogging",
+              "Resource": ["arn:aws:logs:*:*:*"],
+              "Effect": "Allow",
+              "Action" :
+                      [
+                        "logs:CreateLogGroup" ,
+                        "logs:CreateLogStream" ,
+                        "logs:PutLogEvents"
+                      ]
+            },
+
+            {
+              "Sid" : "LambdaEC2CreateTags",
+              "Resource": ["*"],
+              "Effect": "Allow",
+              "Action" :
+                      [
+                        "ec2:CreateTags",
+                        "ec2:Describe*"
+                      ]
+            }
+
+          ]
+}

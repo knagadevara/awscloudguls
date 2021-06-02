@@ -1,0 +1,20 @@
+{
+  "detail-type":
+  [
+    "AWS API call via CloudTrail"
+  ],
+  "detail":
+  {
+    "eventSource":
+    [
+      "ec2.amazonaws.com"
+    ],
+    "eventName":
+    [
+            "RunInstance",
+            "CreateVolume",
+            "CreateImage",
+            "CreateSnapshot"
+    ]
+  }
+}

@@ -36,7 +36,7 @@ AIM: Automating Tagging and lock the permissions of the resources which are crea
             --policy-document file://CreateTags.json  \
             --description "Lambda-Function Creates Tags on EC2 instances"
 
-2. Zip and export it to AWS
+2. Zip lamgda with other related packages.
    
         zip -r9 EC2OwnerTag.zip lambda_function.py
     
